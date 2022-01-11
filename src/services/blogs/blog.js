@@ -25,7 +25,7 @@ blogRouter.get("/:blogId", async(req, res, next)=> {
         const blogId = await BlogsModel.findById(req.params.blogId)
         res.send(blogId)
     } catch (error) {
-        next(error)
+        next(createHttpError(404, `User with id ${blogId} not found!`))
     }
 })
 blogRouter.put("/:blogId", async(req, res, next)=> {
@@ -34,7 +34,7 @@ blogRouter.put("/:blogId", async(req, res, next)=> {
         const updateBlog = await BlogsModel.findByIdAndUpdate(blogId, req.body, {new:true})
         res.send(updateBlog)
     } catch (error) {
-        next(error)
+        next(createHttpError(404, `User with id ${blogId} not found!`))
     }
 })
 blogRouter.delete("/:blogId", async(req, res, next)=> {
@@ -43,7 +43,7 @@ blogRouter.delete("/:blogId", async(req, res, next)=> {
         const deleteBlog = await BlogsModel.findByIdAndDelete(blogId)
         res.send()
     } catch (error) {
-        next(error)
+        next(createHttpError(404, `User with id ${blogId} not found!`))
     }
 })
 

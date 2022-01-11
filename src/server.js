@@ -2,7 +2,7 @@ import express from 'express'
 import listEndpoints from 'express-list-endpoints'
 import mongoose from 'mongoose'
 import cors from 'cors'
-
+import { notFoundError, badRequestError, genericServerError } from './services/errorHandlers.js'
 const server = express()
 const port = process.env.PORT || 3001
 
@@ -18,6 +18,11 @@ server.use(express.json())
 
 server.use("/blogs", blogRouter)
 
+// ****************************** ERROR HANDLERS **************************
+
+server.use(notFoundError)
+server.use(badRequestError)
+server.use(genericServerError)
 
 
 // ************************************** DB CONNECTIONS **********************************
