@@ -1,10 +1,18 @@
 import express from 'express'
-import listEndpoint from 'express-list-endpoints'
+import listEndpoints from 'express-list-endpoints'
 import mongoose from 'mongoose'
 
 const server = express()
 const port = process.env.PORT || 3001
 
+// ************************************* MIDDLEWARES *****************************
+
+
+
+
+
+
+// *************************************** ROUTES ********************************
 
 
 
@@ -13,10 +21,18 @@ const port = process.env.PORT || 3001
 
 
 
+// ************************************** DB CONNECTIONS **********************************
+
+mongoose.connect("mongodb+srv://alimukhtor:alimukhtor@cluster0.9wscl.mongodb.net/striveBlogDb?retryWrites=true&w=majority")
+mongoose.connection.on("connected", () => {
+    console.log("Connected to Mongo!")
+  
+    server.listen(port, () => {
+      console.table(listEndpoints(server))
+      console.log(`Server running on port ${port}`)
+    })
+  })
 
 
 
 
-server.listen(port, ()=> {
-    console.log(`Server is running on ${port}`);
-})
