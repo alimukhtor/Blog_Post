@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-import { Schema, model } from 'mongoose'
+const { Schema, model } = mongoose
 
 const blogSchema = new Schema({
     category:{type:String, required:true},
@@ -8,16 +8,16 @@ const blogSchema = new Schema({
     cover:{type:String, required:true},
     readTime:{
         value:{type:Number},
-        unit:{type:minute}
+        unit:{type:Number}
     },
     author:{
-        name:{type:String},
-        avatar:{type:String}
+        name:{type:String, required:true},
+        avatar:{type:String, required:true}
     },
-    content:{type:HTML}
+    content:{type:String}
 },
 {
     timestamps:true
 })
 
-export default model("Blog", blogSchema)
+export default model("Blogs", blogSchema)
