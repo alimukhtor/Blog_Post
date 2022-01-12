@@ -23,7 +23,6 @@ blogRouter.get("/", async(req, res, next)=> {
         .skip(selectQuery.options.skip)
         .limit(selectQuery.options.limit)
         res.send({total, blogs})
-        // console.log(blogs);
     } catch (error) {
         next(error)
     }
