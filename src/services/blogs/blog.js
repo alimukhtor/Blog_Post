@@ -77,9 +77,32 @@ blogRouter.get("/:blogId/comments", async(req, res, next)=> {
         next(error)
     }
 })
-blogRouter.get("/:blogId/comments/:commentId", async(req, res, next)=> {})
+blogRouter.get("/:blogId/comments/:commentId", async(req, res, next)=> {
+    try {
+        const blogsId = await BlogsModel.findById(req.params.blogId)
+        if(blogsId){
+            const postedComment = blogsId.comments.find(comment=> comment._id.toString() === req.params.commentId)
+            if(postedComment){
+                res.send(postedComment)
+            }else{
+                console.log("error");
+                // next(createHttpError(404, `User with id ${commentId} not found!`))
+            }
+        }else{
+            next(createHttpError(404, `User with id ${blogId} not found!`))
+        }
+    } catch (error) {
+        next(error)
+    }
+})
 blogRouter.put("/:blogId/comments/:coommentId", async(req, res, next)=> {})
-blogRouter.delete("/:blogId/comments/:coommentId", async(req, res, next)=> {})
+blogRouter.delete("/:blogId/comments/:coommentId", async(req, res, next)=> {
+    try {
+        
+    } catch (error) {
+        next(error)
+    }
+})
 
 
 export default blogRouter
