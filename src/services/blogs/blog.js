@@ -95,10 +95,19 @@ blogRouter.get("/:blogId/comments/:commentId", async(req, res, next)=> {
         next(error)
     }
 })
-blogRouter.put("/:blogId/comments/:coommentId", async(req, res, next)=> {})
-blogRouter.delete("/:blogId/comments/:coommentId", async(req, res, next)=> {
+blogRouter.put("/:blogId/comments/:commentId", async(req, res, next)=> {})
+blogRouter.delete("/:blogId/comments/:commentId", async(req, res, next)=> {
     try {
-        
+        const modifyBlogs = await BlogsModel.findByIdAndUpdate(
+            req.params.blogId,
+            {$pull:{comments:{_id:req.params.commentId}}},
+            {new:true}
+        )
+        if(modifyBlogs){
+            res.send(modifyBlogs)
+        }else{
+            next(createHttpError(404, `User with id ${blogId} not found!`))
+        }
     } catch (error) {
         next(error)
     }
