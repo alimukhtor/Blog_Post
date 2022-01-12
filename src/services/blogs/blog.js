@@ -47,5 +47,39 @@ blogRouter.delete("/:blogId", async(req, res, next)=> {
     }
 })
 
+blogRouter.post("/:blogId/comments", async(req, res, next)=> {
+    try {
+        const getBlogId = await BlogsModel.findById(req.params.blogId, {_id:0})
+        // console.log("BLogId:", getBlogId.toObject());
+        if(getBlogId){
+            const postComment = { ...getBlogId.toObject(), commentedDate: new Date()} 
+            console.log("Poste comment:", postComment);
+            const modifyBlog = await BlogsModel.findByIdAndUpdate(req.params.blogId, {$push:{comments:postComment}}, {new:true})
+            if(modifyBlog){
+                res.send(modifyBlog)
+            }else{
+                next(createHttpError(404, `User with id ${blogId} not found!`))
+            }
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+blogRouter.get("/:blogId/comments", async(req, res, next)=> {
+    try {
+        const blogs = await BlogsModel.findById(req.params.blogId)
+        if(blogs){
+            res.send(blogs.comments)
+        }else{
+            next(createHttpError(404, `User with id ${blogId} not found!`))
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+blogRouter.get("/:blogId/comments/:commentId", async(req, res, next)=> {})
+blogRouter.put("/:blogId/comments/:coommentId", async(req, res, next)=> {})
+blogRouter.delete("/:blogId/comments/:coommentId", async(req, res, next)=> {})
+
 
 export default blogRouter

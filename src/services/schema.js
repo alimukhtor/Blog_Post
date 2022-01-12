@@ -14,7 +14,14 @@ const blogSchema = new Schema({
         name:{type:String, required:true},
         avatar:{type:String, required:true}
     },
-    content:{type:String}
+    content:{type:String},
+    comments:[
+        {
+            rate:{type:Number, required:true},
+            commentArea:{type:String, required:true},
+            commentedDate:{type:Date}
+        },
+    ]
 },
 {
     timestamps:true
