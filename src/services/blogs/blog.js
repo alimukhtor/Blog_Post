@@ -75,8 +75,9 @@ blogRouter.post("/:blogId/comments", async(req, res, next)=> {
 blogRouter.get("/:blogId/comments", async(req, res, next)=> {
     try {
         const blogs = await BlogsModel.findById(req.params.blogId)
+
         if(blogs){
-            res.send(blogs.comments)
+            res.send(blogs.comments) //res.send(blogs.comments.slice(0,10)) gives me 10 record comments
         }else{
             next(createHttpError(404, `User with id ${blogId} not found!`))
         }
