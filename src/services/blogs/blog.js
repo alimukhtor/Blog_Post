@@ -1,4 +1,5 @@
 import express from 'express'
+import q2m from "query-to-mongo"
 import BlogsModel from '../schema.js'
 
 const blogRouter = express.Router()
@@ -14,8 +15,15 @@ blogRouter.post("/", async(req, res, next)=> {
 })
 blogRouter.get("/", async(req, res, next)=> {
     try {
-        const blogs = await BlogsModel.find()
-        res.send(blogs)
+        console.log("Req query:", req.query);
+        const selectQuery = q2m(req.query)
+        const total = await BlogsModel.countDocuments(selectQuery.criteria)
+        const blogs = await BlogsModel.find(selectQuery.criteria)
+        .sort(selectQuery.options.sort)
+        .skip(selectQuery.options.skip)
+        .limit(selectQuery.options.limit)
+        res.send({total, blogs})
+        // console.log(blogs);
     } catch (error) {
         next(error)
     }
