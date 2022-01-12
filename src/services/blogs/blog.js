@@ -15,14 +15,14 @@ blogRouter.post("/", async(req, res, next)=> {
 })
 blogRouter.get("/", async(req, res, next)=> {
     try {
-        console.log("Req query:", req.query);
+        console.log("Req query:", q2m(req.query));
         const selectQuery = q2m(req.query)
         const total = await BlogsModel.countDocuments(selectQuery.criteria)
         const blogs = await BlogsModel.find(selectQuery.criteria)
         .sort(selectQuery.options.sort)
-        .skip(selectQuery.options.skip)
+        .skip(selectQuery.options.skip || 0)
         .limit(selectQuery.options.limit)
-        res.send({total, blogs})
+        res.send({links:selectQuery.links("/blogs", total), pageTotal: Math.ceil(total / selectQuery.options.limit), total, blogs})
     } catch (error) {
         next(error)
     }
