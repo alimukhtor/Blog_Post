@@ -85,8 +85,8 @@ blogRouter.get("/:blogId/comments/:commentId", async(req, res, next)=> {
             if(postedComment){
                 res.send(postedComment)
             }else{
-                console.log("error");
-                // next(createHttpError(404, `User with id ${commentId} not found!`))
+                // console.log("error");
+                next(createHttpError(404, `User with id ${req.params.commentId} not found!`))
             }
         }else{
             next(createHttpError(404, `User with id ${blogId} not found!`))
@@ -95,7 +95,25 @@ blogRouter.get("/:blogId/comments/:commentId", async(req, res, next)=> {
         next(error)
     }
 })
-blogRouter.put("/:blogId/comments/:commentId", async(req, res, next)=> {})
+blogRouter.put("/:blogId/comments/:commentId", async(req, res, next)=> {
+    try {
+        const blogs = await BlogsModel.findById(req.params.blogId)
+        if(blogs){
+            const commentIndex = blogs.comments.findIndex(comment => comment._id.toString() === req.params.commentId)
+            if(commentIndex !== -1){
+                blogs.comments[commentIndex] = {...blogs.comments[commentIndex].toObject(), ...req.body}
+                await blogs.save()
+                res.send(blogs)
+            }else{
+                next(createHttpError(404, `User with id ${req.params.commentId} not found!`))
+            }
+        }else{
+            next(createHttpError(404, `User with id ${blogId} not found!`))
+        }
+    } catch (error) {
+        next(error)
+    }
+})
 blogRouter.delete("/:blogId/comments/:commentId", async(req, res, next)=> {
     try {
         const modifyBlogs = await BlogsModel.findByIdAndUpdate(
