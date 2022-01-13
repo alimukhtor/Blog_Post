@@ -22,7 +22,8 @@ blogRouter.get("/", async(req, res, next)=> {
         .sort(selectQuery.options.sort)
         .skip(selectQuery.options.skip || 0)
         .limit(selectQuery.options.limit)
-        .populate({path:"authors"})
+        .populate("authors")
+        .populate({path:"likes", select:"isLiked"})
         res.send({links:selectQuery.links("/blogs", total), pageTotal: Math.ceil(total / selectQuery.options.limit), total, blogs})
     } catch (error) {
         next(error)

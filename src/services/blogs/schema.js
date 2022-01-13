@@ -18,7 +18,8 @@ const blogSchema = new Schema({
             commentedDate:{type:Date}
         },
     ],
-    authors:[{type:Schema.Types.ObjectId, ref:"Authors"}]
+    authors:[{type:Schema.Types.ObjectId, ref:"Authors"}],
+    likes:[{type:Schema.Types.ObjectId, ref:"Like"}]
 },
 {
     timestamps:true
