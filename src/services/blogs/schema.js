@@ -10,10 +10,6 @@ const blogSchema = new Schema({
         value:{type:Number},
         unit:{type:Number}
     },
-    author:{
-        name:{type:String, required:true},
-        avatar:{type:String, required:true}
-    },
     content:{type:String},
     comments:[
         {
