@@ -7,6 +7,7 @@ const server = express()
 const port = process.env.PORT || 3001
 
 import blogRouter from '../src/services/blogs/blog.js'
+import authorRouter from './services/authors/index.js'
 
 // ************************************* MIDDLEWARES *****************************
 
@@ -17,7 +18,7 @@ server.use(express.json())
 // *************************************** ROUTES ********************************
 
 server.use("/blogs", blogRouter)
-
+server.use("/authors", authorRouter)
 // ****************************** ERROR HANDLERS **************************
 
 server.use(notFoundError)

@@ -21,7 +21,8 @@ const blogSchema = new Schema({
             commentArea:{type:String, required:true},
             commentedDate:{type:Date}
         },
-    ]
+    ],
+    authors:[{type:Schema.Types.ObjectId, ref:"Authors"}]
 },
 {
     timestamps:true

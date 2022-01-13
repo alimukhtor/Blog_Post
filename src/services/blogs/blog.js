@@ -1,6 +1,6 @@
 import express from 'express'
 import q2m from "query-to-mongo"
-import BlogsModel from '../schema.js'
+import BlogsModel from './schema.js'
 
 const blogRouter = express.Router()
 
