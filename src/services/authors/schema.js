@@ -6,4 +6,4 @@ const AuthorSchema = new Schema({
     last_name:{type:String, require:true}
 },{timestamps:true})
 
-export default("Authors", AuthorSchema)
+export default model("Authors", AuthorSchema)
