@@ -24,5 +24,5 @@ export const unauthorizedHandler = (err, req, res, next) => {
     console.log(err)
     res
       .status(500)
-      .send({ status: "error", message: "Something bad happened on our side!" })
+      .send({ status: "error", message: "Something bad happened in server side!" })
   }

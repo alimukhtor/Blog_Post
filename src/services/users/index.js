@@ -1,6 +1,7 @@
 import express from "express";
 import UserModel from './schema.js'
 import {userAuth} from '../userAuth/userAuth.js'
+import { userOnlyMiddleware } from "../userAuth/user.js";
 
 const userRouter = express.Router()
 
@@ -21,7 +22,7 @@ userRouter.post("/", async(req, res, next)=> {
         next(error)
     }
 })
-userRouter.get("/:userId", async(req, res, next)=> {
+userRouter.get("/:userId",userAuth, userOnlyMiddleware, async(req, res, next)=> {
     try {
         const user = await UserModel.findById(req.params.userId)
         res.send(user)
@@ -29,7 +30,7 @@ userRouter.get("/:userId", async(req, res, next)=> {
         next(error)
     }
 })
-userRouter.put("/:userId", async(req, res, next)=> {
+userRouter.put("/:userId",  userAuth, userOnlyMiddleware, async(req, res, next)=> {
     try {
         const user = await UserModel.findByIdAndUpdate(req.params.userId, req.body, {new:true})
         res.send(user)
@@ -37,7 +38,7 @@ userRouter.put("/:userId", async(req, res, next)=> {
         next(error)
     }
 })
-userRouter.delete("/:userId", async(req, res, next)=> {
+userRouter.delete("/:userId", userAuth, userOnlyMiddleware, async(req, res, next)=> {
     try {
         await UserModel.findByIdAndDelete(req.params.userId)
         res.send()
