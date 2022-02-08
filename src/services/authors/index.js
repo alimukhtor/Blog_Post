@@ -14,7 +14,7 @@ authorRouter.post("/", async(req, res, next)=> {
         next(error)
     }
 })
-authorRouter.get("/", async(req, res, next)=> {
+authorRouter.get("/", userAuth,userOnlyMiddleware, async(req, res, next)=> {
     try {
         const author = await AuthorsModel.find(req.body)
         res.send(author)
@@ -22,7 +22,7 @@ authorRouter.get("/", async(req, res, next)=> {
         next(error)
     }
 })
-authorRouter.get("/:authorId", async(req, res, next)=> {
+authorRouter.get("/:authorId", userAuth,userOnlyMiddleware, async(req, res, next)=> {
     try {
         const authorId = await AuthorsModel.findById(req.params.authorId)
         res.send(authorId)
@@ -30,7 +30,7 @@ authorRouter.get("/:authorId", async(req, res, next)=> {
         next(error)
     }
 })
-authorRouter.put("/:authorId", async(req, res, next)=> {
+authorRouter.put("/:authorId", userAuth,userOnlyMiddleware, async(req, res, next)=> {
     try {
         const updateAuthor = await AuthorsModel.findByIdAndUpdate(req.params.authorId, req.body, {new:true})
         res.send(updateAuthor)
@@ -38,7 +38,7 @@ authorRouter.put("/:authorId", async(req, res, next)=> {
         next(error)
     }
 })
-authorRouter.delete("/:authorId", async(req, res, next)=> {
+authorRouter.delete("/:authorId", userAuth,userOnlyMiddleware, async(req, res, next)=> {
     try {
         await AuthorsModel.findByIdAndDelete(req.params.authorId)
         res.send()

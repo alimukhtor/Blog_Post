@@ -32,10 +32,16 @@ blogRouter.get("/", userAuth, userOnlyMiddleware, async(req, res, next)=> {
         next(error)
     }
 })
-blogRouter.get("/me/stories", userAuth, userOnlyMiddleware, async(req, res, next)=> {
+blogRouter.get("/me/stories", userAuth, async(req, res, next)=> {
     try {
+        if(req.user.role === "User"){
+        const blogs = await BlogsModel.find().populate("authors")
+        const myBlogs = blogs.filter(blog => blog.authors[0].role  === req.user.role)
+        // console.log("Req body:", blogs);
+            res.send(myBlogs)
+
+        }
         const user = await req.user
-        res.send(user)
     } catch (error) {
         next(error)
     }
