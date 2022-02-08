@@ -16,7 +16,6 @@ userRouter.post("/", async(req, res, next)=> {
         const user = new UserModel(req.body)
         const {_id} = await user.save()
         res.send({_id})
-        console.log("Userr", user);
     } catch (error) {
         next(error)
     }
