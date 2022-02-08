@@ -5,7 +5,7 @@ import { userOnlyMiddleware } from "../userAuth/user.js";
 
 const userRouter = express.Router()
 
-userRouter.get("/", userAuth, async(req, res, next)=> {
+userRouter.get("/", userAuth, userOnlyMiddleware, async(req, res, next)=> {
     try {
         const user = await UserModel.find()
         res.send(user)
@@ -13,6 +13,17 @@ userRouter.get("/", userAuth, async(req, res, next)=> {
         next(error)
     }
 })
+
+// userRouter.get("/me/stories", userAuth, userOnlyMiddleware, async(req, res, next)=> {
+//     try {
+//         const user = await UserModel.find().populate("blogs")
+//         res.send(user)
+//     } catch (error) {
+//         next(error)
+//     }
+// })
+
+
 userRouter.post("/", async(req, res, next)=> {
     try {
         const user = new UserModel(req.body)
@@ -22,7 +33,7 @@ userRouter.post("/", async(req, res, next)=> {
         next(error)
     }
 })
-userRouter.get("/:userId",userAuth, userOnlyMiddleware, async(req, res, next)=> {
+userRouter.get("/:userId", userAuth, userOnlyMiddleware, async(req, res, next)=> {
     try {
         const user = await UserModel.findById(req.params.userId)
         res.send(user)

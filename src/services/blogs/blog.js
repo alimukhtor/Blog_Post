@@ -1,6 +1,8 @@
 import express from 'express'
 import q2m from "query-to-mongo"
 import BlogsModel from './schema.js'
+import {userAuth} from '../userAuth/userAuth.js'
+import { userOnlyMiddleware } from "../userAuth/user.js";
 
 const blogRouter = express.Router()
 
@@ -13,7 +15,7 @@ blogRouter.post("/", async(req, res, next)=> {
         next(error)
     }
 })
-blogRouter.get("/", async(req, res, next)=> {
+blogRouter.get("/", userAuth, userOnlyMiddleware, async(req, res, next)=> {
     try {
         console.log("Req query:", q2m(req.query));
         const selectQuery = q2m(req.query)
@@ -23,13 +25,22 @@ blogRouter.get("/", async(req, res, next)=> {
         .skip(selectQuery.options.skip || 0)
         .limit(selectQuery.options.limit)
         .populate("authors")
+        // .populate("users")
         .populate({path:"likes", select:"isliked"})
         res.send({links:selectQuery.links("/blogs", total), pageTotal: Math.ceil(total / selectQuery.options.limit), total, blogs})
     } catch (error) {
         next(error)
     }
 })
-blogRouter.get("/:blogId", async(req, res, next)=> {
+blogRouter.get("/me/stories", userAuth, userOnlyMiddleware, async(req, res, next)=> {
+    try {
+        const user = await req.user
+        res.send(user)
+    } catch (error) {
+        next(error)
+    }
+})
+blogRouter.get("/:blogId", userAuth, userOnlyMiddleware, async(req, res, next)=> {
     try {
         const blogId = await BlogsModel.findById(req.params.blogId)
         res.send(blogId)
@@ -37,7 +48,7 @@ blogRouter.get("/:blogId", async(req, res, next)=> {
         next(createHttpError(404, `User with id ${blogId} not found!`))
     }
 })
-blogRouter.put("/:blogId", async(req, res, next)=> {
+blogRouter.put("/:blogId", userAuth, userOnlyMiddleware, async(req, res, next)=> {
     try {
         const blogId = req.params.blogId
         const updateBlog = await BlogsModel.findByIdAndUpdate(blogId, req.body, {new:true})
@@ -46,7 +57,7 @@ blogRouter.put("/:blogId", async(req, res, next)=> {
         next(createHttpError(404, `User with id ${blogId} not found!`))
     }
 })
-blogRouter.delete("/:blogId", async(req, res, next)=> {
+blogRouter.delete("/:blogId", userAuth, userOnlyMiddleware, async(req, res, next)=> {
     try {
         const blogId = req.params.blogId
         const deleteBlog = await BlogsModel.findByIdAndDelete(blogId)
