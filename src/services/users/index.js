@@ -1,9 +1,10 @@
 import express from "express";
 import UserModel from './schema.js'
+import {userAuth} from '../userAuth/userAuth.js'
 
 const userRouter = express.Router()
 
-userRouter.get("/", async(req, res, next)=> {
+userRouter.get("/", userAuth, async(req, res, next)=> {
     try {
         const user = await UserModel.find()
         res.send(user)

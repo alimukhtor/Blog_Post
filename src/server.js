@@ -2,7 +2,7 @@ import express from 'express'
 import listEndpoints from 'express-list-endpoints'
 import mongoose from 'mongoose'
 import cors from 'cors'
-import { notFoundError, badRequestError, genericServerError } from './services/errorHandlers.js'
+import { unauthorizedHandler, forbiddenHandler, catchAllHandler } from './services/errorHandlers.js'
 const server = express()
 const port = process.env.PORT || 3001
 
@@ -25,9 +25,9 @@ server.use("/likes", likesRouter)
 server.use("/users", userRouter)
 // ****************************** ERROR HANDLERS **************************
 
-server.use(notFoundError)
-server.use(badRequestError)
-server.use(genericServerError)
+server.use(unauthorizedHandler)
+server.use(forbiddenHandler)
+server.use(catchAllHandler)
 
 
 // ************************************** DB CONNECTIONS **********************************
