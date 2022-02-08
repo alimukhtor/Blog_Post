@@ -9,7 +9,6 @@ const port = process.env.PORT || 3001
 import blogRouter from '../src/services/blogs/blog.js'
 import authorRouter from './services/authors/index.js'
 import likesRouter from './services/likes/index.js'
-import userRouter from './services/users/index.js'
 
 // ************************************* MIDDLEWARES *****************************
 
@@ -22,7 +21,6 @@ server.use(express.json())
 server.use("/blogs", blogRouter)
 server.use("/authors", authorRouter)
 server.use("/likes", likesRouter)
-server.use("/users", userRouter)
 // ****************************** ERROR HANDLERS **************************
 
 server.use(unauthorizedHandler)

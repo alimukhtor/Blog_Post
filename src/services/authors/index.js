@@ -1,5 +1,7 @@
 import express from 'express'
 import AuthorsModel from './schema.js'
+import {userAuth} from '../userAuth/userAuth.js'
+import { userOnlyMiddleware } from "../userAuth/user.js";
 
 const authorRouter = express.Router()
 
@@ -38,7 +40,7 @@ authorRouter.put("/:authorId", async(req, res, next)=> {
 })
 authorRouter.delete("/:authorId", async(req, res, next)=> {
     try {
-        const deleteAuthor = await AuthorsModel.findByIdAndDelete(req.params.authorId)
+        await AuthorsModel.findByIdAndDelete(req.params.authorId)
         res.send()
     } catch (error) {
         next(error)
