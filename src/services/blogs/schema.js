@@ -19,7 +19,8 @@ const blogSchema = new Schema({
         },
     ],
     authors:[{type:Schema.Types.ObjectId, ref:"Authors"}],
-    likes:[{type:Schema.Types.ObjectId, ref:"Like"}]
+    likes:[{type:Schema.Types.ObjectId, ref:"Like"}],
+    users:[{type:Schema.Types.ObjectId, ref:"User"}]
 },
 {
     timestamps:true
