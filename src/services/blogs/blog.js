@@ -35,7 +35,7 @@ blogRouter.get("/", userAuth, userOnlyMiddleware, async(req, res, next)=> {
 blogRouter.get("/me/stories", userAuth, async(req, res, next)=> {
     try {
         const blogs = await BlogsModel.find().populate("authors")
-        const myBlogs = blogs.filter(blog => blog.authors[0].role  === req.user.role)
+        const myBlogs = blogs.filter(blog => blog.authors[0].role  === "User" || blog.authors[0].role  === "Admin" )
         res.send(myBlogs)
     } catch (error) {
         next(error)
