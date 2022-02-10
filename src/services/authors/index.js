@@ -2,6 +2,8 @@ import express from 'express'
 import AuthorsModel from './schema.js'
 import {userAuth} from '../userAuth/userAuth.js'
 import { userOnlyMiddleware } from "../userAuth/user.js";
+import createHttpError from 'http-errors';
+import {JWTAuthenticate} from '../userAuth/tools.js'
 
 const authorRouter = express.Router()
 
@@ -47,5 +49,29 @@ authorRouter.delete("/:authorId", userAuth,userOnlyMiddleware, async(req, res, n
     }
 })
 
+authorRouter.post("/register", async(req, res, next)=> {
+    try {
+        const user = new AuthorsModel({email:req.body.email, password:req.body.password})
+        const newUser = await user.save()
+        res.send(newUser)
+    } catch (error) {
+        next(error)
+    }
+})
+authorRouter.post("/login", async(req, res, next)=> {
+    try {
+        const {email, password} = req.body
+        const author = await AuthorsModel.checkCredentials(email, password)
+        if(author){
+            const accessToken = await JWTAuthenticate(author)
+            res.send({accessToken})
+        }else{
+            next(createHttpError(401, "Credentials arent ok!"))
+        }
+    } catch (error) {
+        next(error)
+    }
+
+})
 
 export default authorRouter

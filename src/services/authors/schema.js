@@ -3,11 +3,11 @@ const {Schema, model} = mongoose
 import bcrypt from 'bcrypt'
 
 const AuthorSchema = new Schema({
-    first_name:{type:String, require:true},
-    last_name:{type:String, require:true},
+    first_name:{type:String},
+    last_name:{type:String},
     email:{type:String, required:true},
     password:{type:String, required:true},
-    role:{type:String, enum:["Admin", "User"], required:true},
+    role:{type:String, enum:["Admin", "User"]},
    
 },{timestamps:true})
 
