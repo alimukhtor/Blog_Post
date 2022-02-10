@@ -4,6 +4,7 @@ import {userAuth} from '../userAuth/userAuth.js'
 import { userOnlyMiddleware } from "../userAuth/user.js";
 import createHttpError from 'http-errors';
 import {JWTAuthenticate} from '../userAuth/tools.js'
+import { JWTAuthMiddleware } from '../userAuth/token.js';
 
 const authorRouter = express.Router()
 
@@ -16,15 +17,15 @@ authorRouter.post("/", async(req, res, next)=> {
         next(error)
     }
 })
-authorRouter.get("/", userAuth,userOnlyMiddleware, async(req, res, next)=> {
+authorRouter.get("/",  JWTAuthMiddleware,async(req, res, next)=> {
     try {
-        const author = await AuthorsModel.find(req.body)
+        const author = await AuthorsModel.find()
         res.send(author)
     } catch (error) {
         next(error)
     }
 })
-authorRouter.get("/:authorId", userAuth,userOnlyMiddleware, async(req, res, next)=> {
+authorRouter.get("/:authorId", JWTAuthMiddleware, async(req, res, next)=> {
     try {
         const authorId = await AuthorsModel.findById(req.params.authorId)
         res.send(authorId)
@@ -32,7 +33,7 @@ authorRouter.get("/:authorId", userAuth,userOnlyMiddleware, async(req, res, next
         next(error)
     }
 })
-authorRouter.put("/:authorId", userAuth,userOnlyMiddleware, async(req, res, next)=> {
+authorRouter.put("/:authorId", JWTAuthMiddleware, async(req, res, next)=> {
     try {
         const updateAuthor = await AuthorsModel.findByIdAndUpdate(req.params.authorId, req.body, {new:true})
         res.send(updateAuthor)
@@ -40,7 +41,7 @@ authorRouter.put("/:authorId", userAuth,userOnlyMiddleware, async(req, res, next
         next(error)
     }
 })
-authorRouter.delete("/:authorId", userAuth,userOnlyMiddleware, async(req, res, next)=> {
+authorRouter.delete("/:authorId", JWTAuthMiddleware, async(req, res, next)=> {
     try {
         await AuthorsModel.findByIdAndDelete(req.params.authorId)
         res.send()
@@ -58,7 +59,9 @@ authorRouter.post("/register", async(req, res, next)=> {
         next(error)
     }
 })
-authorRouter.post("/login", async(req, res, next)=> {
+
+
+authorRouter.post("/login",  async(req, res, next)=> {
     try {
         const {email, password} = req.body
         const author = await AuthorsModel.checkCredentials(email, password)

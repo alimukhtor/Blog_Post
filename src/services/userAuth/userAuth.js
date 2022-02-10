@@ -10,12 +10,12 @@ export const userAuth = async(req,res,next)=> {
         console.log("Decoded Credentials",decodedCredentials);
         const [email, password] = decodedCredentials.split(":")
         const user = await AuthorModel.checkCredentials(email, password)
-        if(user){
-            req.user = user
-            next()
-        }else{
-            next(createHttpError(401, "Credentials are not ok!"))
-        }
+        // if(user){
+        //     req.user = user
+        //     next()
+        // }else{
+        //     next(createHttpError(401, "Credentials are not ok!"))
+        // }
     }else{
         next(createHttpError(401, "Please provide credentials in Authorization header!"))
     }
