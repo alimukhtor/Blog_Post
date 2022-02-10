@@ -17,7 +17,7 @@ authorRouter.post("/", async(req, res, next)=> {
         next(error)
     }
 })
-authorRouter.get("/",  JWTAuthMiddleware,async(req, res, next)=> {
+authorRouter.get("/",  JWTAuthMiddleware, async(req, res, next)=> {
     try {
         const author = await AuthorsModel.find()
         res.send(author)
