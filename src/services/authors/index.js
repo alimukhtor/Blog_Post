@@ -30,8 +30,9 @@ authorRouter.get("/",  JWTAuthMiddleware, async(req, res, next)=> {
 authorRouter.get("/googleLogin", passport.authenticate("google", { scope: ["profile", "email"] })
 ) 
 
-authorRouter.get("/googleRedirect", passport.authenticate("google"), async(req,res,next)=> {
+authorRouter.get("/googleRedirect", passport.authenticate("google", {failureRedirect:`${process.env.GOOGLE_FE_URL}`}), async(req,res,next)=> {
     try {
+        console.log("Token:", process.env.GOOGLE_FE_URL);
         console.log("Hi");
         console.log("Token:", req.user.token);
         res.redirect(

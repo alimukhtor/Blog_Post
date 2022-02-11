@@ -14,7 +14,7 @@ import authorRouter from './services/authors/index.js'
 import likesRouter from './services/likes/index.js'
 
 // ************************************* MIDDLEWARES *****************************
-passport.use("google", googleStrategy)
+passport.use(googleStrategy)
 
 server.use(cors())
 server.use(express.json())
@@ -27,9 +27,9 @@ server.use("/authors", authorRouter)
 server.use("/likes", likesRouter)
 // ****************************** ERROR HANDLERS **************************
 
-server.use(unauthorizedHandler)
-server.use(forbiddenHandler)
-server.use(catchAllHandler)
+// server.use(unauthorizedHandler)
+// server.use(forbiddenHandler)
+// server.use(catchAllHandler)
 
 
 // ************************************** DB CONNECTIONS **********************************

@@ -3,7 +3,7 @@ import GoogleStrategy from 'passport-google-oauth20'
 import {JWTAuthenticate} from '../userAuth/tools.js'
 import AuthorsModel from '../authors/schema.js'
 
-console.log(process.env.JWT_CLIENT_ID);
+// console.log(process.env.JWT_CLIENT_ID);
 const googleStrategy = new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -16,20 +16,23 @@ const googleStrategy = new GoogleStrategy({
 
             const author = await AuthorsModel.findOne({googleId:profile.id})
             if(author){
+                console.log("passport.initialize()")
                 const token = await JWTAuthenticate(author)
                 passportNext(null, {token})
             }else{
                 const newUser = new AuthorsModel({
-                    name: profile.name.givenName,
-                    surname: profile.name.familyName,
+                    first_name: profile.name.givenName,
+                    last_name: profile.name.familyName,
                     email: profile.emails[0].value,
                     googleId: profile.id,
-                  })
-          
-                  const savedUser = await newUser.save()
-                  const token = await JWTAuthenticate(savedUser)
-                  console.log("token", token);
-                  passportNext(null, { token })
+                })
+                
+                console.log("as", newUser);
+                // const savedUser = await newUser.save()
+                // console.log("as", newUser);
+                const token = await JWTAuthenticate(newUser)
+                console.log(token);
+                passportNext(null, { token })
             }
         } catch (error) {
             // passportNext(error)

@@ -3,8 +3,13 @@ import jwt from "jsonwebtoken";
 
 
 export const JWTAuthenticate = async user => {
-    const accessToken = await generateJWTToken({ _id: user._id})
-    return accessToken
+    try {
+        const accessToken = await generateJWTToken({ _id: user._id})
+        return accessToken
+        
+    } catch (error) {
+    console.log(error);        
+    }
   }
 
 const generateJWTToken = payload => 

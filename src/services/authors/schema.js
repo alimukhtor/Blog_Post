@@ -6,7 +6,7 @@ const AuthorSchema = new Schema({
     first_name:{type:String},
     last_name:{type:String},
     email:{type:String, required:true},
-    password:{type:String, required:true},
+    password:{type:String},
     role:{type:String, enum:["Admin", "User"]},
     googleId:{type:String}
    
