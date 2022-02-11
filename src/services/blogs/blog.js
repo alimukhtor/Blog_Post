@@ -61,7 +61,7 @@ blogRouter.put("/:blogId", JWTAuthMiddleware, async(req, res, next)=> {
 blogRouter.delete("/:blogId", JWTAuthMiddleware, async(req, res, next)=> {
     try {
         const blogId = req.params.blogId
-        const deleteBlog = await BlogsModel.findByIdAndDelete(blogId)
+        await BlogsModel.findByIdAndDelete(blogId)
         res.send()
     } catch (error) {
         next(createHttpError(404, `User with id ${blogId} not found!`))

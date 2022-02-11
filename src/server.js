@@ -2,7 +2,10 @@ import express from 'express'
 import listEndpoints from 'express-list-endpoints'
 import mongoose from 'mongoose'
 import cors from 'cors'
+import passport from 'passport'
 import { unauthorizedHandler, forbiddenHandler, catchAllHandler } from './services/errorHandlers.js'
+
+import googleStrategy from './services/userAuth/oauth.js'
 const server = express()
 const port = process.env.PORT || 3001
 
@@ -11,13 +14,14 @@ import authorRouter from './services/authors/index.js'
 import likesRouter from './services/likes/index.js'
 
 // ************************************* MIDDLEWARES *****************************
+passport.use("google", googleStrategy)
 
 server.use(cors())
 server.use(express.json())
+server.use(passport.initialize())
 
 
 // *************************************** ROUTES ********************************
-
 server.use("/blogs", blogRouter)
 server.use("/authors", authorRouter)
 server.use("/likes", likesRouter)

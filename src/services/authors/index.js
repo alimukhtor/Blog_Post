@@ -5,6 +5,7 @@ import { userOnlyMiddleware } from "../userAuth/user.js";
 import createHttpError from 'http-errors';
 import {JWTAuthenticate} from '../userAuth/tools.js'
 import { JWTAuthMiddleware } from '../userAuth/token.js';
+import passport from 'passport';
 
 const authorRouter = express.Router()
 
@@ -25,6 +26,21 @@ authorRouter.get("/",  JWTAuthMiddleware, async(req, res, next)=> {
         next(error)
     }
 })
+
+authorRouter.get("/googleLogin", passport.authenticate("google", { scope: ["profile", "email"] })
+) 
+
+authorRouter.get("/googleRedirect", passport.authenticate("google"), async(req,res,next)=> {
+    try {
+        console.log("Token:", req.user.token);
+        res.redirect(
+            `${process.env.FE_URL}?accessToken=${req.user.token.accessToken}`)
+    } catch (error) {
+        next(error)
+    }
+})
+
+
 authorRouter.get("/:authorId", JWTAuthMiddleware, async(req, res, next)=> {
     try {
         const authorId = await AuthorsModel.findById(req.params.authorId)
