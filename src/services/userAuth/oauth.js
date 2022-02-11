@@ -10,27 +10,29 @@ const googleStrategy = new GoogleStrategy({
     callbackURL: `${process.env.CALLBACK_URL}/authors/googleRedirect`,
 },
 
-    async(accessToken, profile, passportNext)=> {
+    async(accessToken, refreshToken, profile, passportNext)=> {
         try {
             console.log("Profile: ", profile);
+
             const author = await AuthorsModel.findOne({googleId:profile.id})
             if(author){
                 const token = await JWTAuthenticate(author)
                 passportNext(null, {token})
             }else{
-                // const newUser = new AuthorsModel({
-                //     name: profile.name.givenName,
-                //     surname: profile.name.familyName,
-                //     email: profile.emails[0].value,
-                //     googleId: profile.id,
-                //   })
+                const newUser = new AuthorsModel({
+                    name: profile.name.givenName,
+                    surname: profile.name.familyName,
+                    email: profile.emails[0].value,
+                    googleId: profile.id,
+                  })
           
-                //   const savedUser = await newUser.save()
-                //   const tokens = await JWTAuthenticate(savedUser)
-                //   passportNext(null, { tokens })
+                  const savedUser = await newUser.save()
+                  const token = await JWTAuthenticate(savedUser)
+                  console.log("token", token);
+                  passportNext(null, { token })
             }
         } catch (error) {
-            passportNext(error)
+            // passportNext(error)
         }
     }
 )

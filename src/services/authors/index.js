@@ -32,9 +32,10 @@ authorRouter.get("/googleLogin", passport.authenticate("google", { scope: ["prof
 
 authorRouter.get("/googleRedirect", passport.authenticate("google"), async(req,res,next)=> {
     try {
+        console.log("Hi");
         console.log("Token:", req.user.token);
         res.redirect(
-            `${process.env.FE_URL}?accessToken=${req.user.token.accessToken}`)
+            `${process.env.GOOGLE_FE_URL}?accessToken=${req.user.token.accessToken}`)
     } catch (error) {
         next(error)
     }
