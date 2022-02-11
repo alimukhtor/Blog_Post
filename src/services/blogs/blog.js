@@ -3,7 +3,7 @@ import q2m from "query-to-mongo"
 import BlogsModel from './schema.js'
 import {userAuth} from '../userAuth/userAuth.js'
 import { userOnlyMiddleware } from "../userAuth/user.js";
-
+import { JWTAuthMiddleware } from '../userAuth/token.js';
 const blogRouter = express.Router()
 
 blogRouter.post("/", async(req, res, next)=> {
@@ -15,7 +15,7 @@ blogRouter.post("/", async(req, res, next)=> {
         next(error)
     }
 })
-blogRouter.get("/", userAuth, userOnlyMiddleware, async(req, res, next)=> {
+blogRouter.get("/", JWTAuthMiddleware, async(req, res, next)=> {
     try {
         console.log("Req query:", q2m(req.query));
         const selectQuery = q2m(req.query)
@@ -32,7 +32,7 @@ blogRouter.get("/", userAuth, userOnlyMiddleware, async(req, res, next)=> {
         next(error)
     }
 })
-blogRouter.get("/me/stories", userAuth, async(req, res, next)=> {
+blogRouter.get("/me/stories", JWTAuthMiddleware, async(req, res, next)=> {
     try {
         const blogs = await BlogsModel.find().populate("authors")
         const myBlogs = blogs.filter(blog => blog.authors[0].role  === "User")
@@ -41,7 +41,7 @@ blogRouter.get("/me/stories", userAuth, async(req, res, next)=> {
         next(error)
     }
 })
-blogRouter.get("/:blogId", userAuth, userOnlyMiddleware, async(req, res, next)=> {
+blogRouter.get("/:blogId", JWTAuthMiddleware, async(req, res, next)=> {
     try {
         const blogId = await BlogsModel.findById(req.params.blogId)
         res.send(blogId)
@@ -49,7 +49,7 @@ blogRouter.get("/:blogId", userAuth, userOnlyMiddleware, async(req, res, next)=>
         next(createHttpError(404, `User with id ${blogId} not found!`))
     }
 })
-blogRouter.put("/:blogId", userAuth, userOnlyMiddleware, async(req, res, next)=> {
+blogRouter.put("/:blogId", JWTAuthMiddleware, async(req, res, next)=> {
     try {
         const blogId = req.params.blogId
         const updateBlog = await BlogsModel.findByIdAndUpdate(blogId, req.body, {new:true})
@@ -58,7 +58,7 @@ blogRouter.put("/:blogId", userAuth, userOnlyMiddleware, async(req, res, next)=>
         next(createHttpError(404, `User with id ${blogId} not found!`))
     }
 })
-blogRouter.delete("/:blogId", userAuth, userOnlyMiddleware, async(req, res, next)=> {
+blogRouter.delete("/:blogId", JWTAuthMiddleware, async(req, res, next)=> {
     try {
         const blogId = req.params.blogId
         const deleteBlog = await BlogsModel.findByIdAndDelete(blogId)
