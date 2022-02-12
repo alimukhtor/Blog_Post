@@ -36,7 +36,7 @@ authorRouter.get("/googleRedirect", passport.authenticate("google", {failureRedi
         console.log("Hi");
         console.log("Token:", req.user.token);
         res.redirect(
-            `${process.env.GOOGLE_FE_URL}?accessToken=${req.user.token.accessToken}`)
+            `${process.env.GOOGLE_FE_URL}?accessToken=${req.user.token}`)
     } catch (error) {
         next(error)
     }
