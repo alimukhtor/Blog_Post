@@ -18,7 +18,7 @@ authorRouter.post("/", async(req, res, next)=> {
         next(error)
     }
 })
-authorRouter.get("/",  JWTAuthMiddleware, async(req, res, next)=> {
+authorRouter.get("/", async(req, res, next)=> {
     try {
         const author = await AuthorsModel.find()
         res.send(author)
@@ -70,10 +70,11 @@ authorRouter.delete("/:authorId", JWTAuthMiddleware, async(req, res, next)=> {
 
 authorRouter.post("/register", async(req, res, next)=> {
     try {
-        const user = new AuthorsModel({email:req.body.email, password:req.body.password})
+        const user = new AuthorsModel(req.body)
         const newUser = await user.save()
         res.send(newUser)
     } catch (error) {
+        console.log(error)
         next(error)
     }
 })
@@ -94,5 +95,6 @@ authorRouter.post("/login",  async(req, res, next)=> {
     }
 
 })
+
 
 export default authorRouter

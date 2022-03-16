@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt'
 const AuthorSchema = new Schema({
     first_name:{type:String},
     last_name:{type:String},
-    email:{type:String, required:true},
+    email:{type:String},
     password:{type:String},
     role:{type:String, enum:["Admin", "User"]},
     googleId:{type:String}
@@ -15,10 +15,10 @@ const AuthorSchema = new Schema({
 AuthorSchema.pre("save", async function(next){
     const newUser = this
     const plainPassword = newUser.password
+    const hashPW = await bcrypt.hash(plainPassword, 11)
+    newUser.password = hashPW
     console.log("Pasword:", hashPW);
-        const hashPW = await bcrypt.hash(plainPassword, 10)
-        newUser.password = hashPW
-        next()
+    next()
 })
 
 AuthorSchema.methods.toJSON = function () {

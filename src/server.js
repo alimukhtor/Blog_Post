@@ -6,7 +6,7 @@ import passport from 'passport'
 import { unauthorizedHandler, forbiddenHandler, catchAllHandler } from './services/errorHandlers.js'
 import googleStrategy from './services/userAuth/oauth.js'
 const server = express()
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3004
 
 import blogRouter from '../src/services/blogs/blog.js'
 import authorRouter from './services/authors/index.js'

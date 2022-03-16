@@ -15,7 +15,7 @@ blogRouter.post("/", async(req, res, next)=> {
         next(error)
     }
 })
-blogRouter.get("/", JWTAuthMiddleware, async(req, res, next)=> {
+blogRouter.get("/", async(req, res, next)=> {
     try {
         console.log("Req query:", q2m(req.query));
         const selectQuery = q2m(req.query)
@@ -25,7 +25,6 @@ blogRouter.get("/", JWTAuthMiddleware, async(req, res, next)=> {
         .skip(selectQuery.options.skip || 0)
         .limit(selectQuery.options.limit)
         .populate("authors")
-        // .populate("users")
         .populate({path:"likes", select:"isliked"})
         res.send({links:selectQuery.links("/blogs", total), pageTotal: Math.ceil(total / selectQuery.options.limit), total, blogs})
     } catch (error) {
