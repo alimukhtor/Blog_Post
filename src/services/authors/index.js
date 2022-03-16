@@ -96,5 +96,20 @@ authorRouter.post("/login",  async(req, res, next)=> {
 
 })
 
+authorRouter.get("/me", JWTAuthMiddleware, async(req, res, next)=> {
+    try {
+        const token = req.headers.authorization;
+        if (!token) return res.send({ message: "No Token Provided!" });
+        const author = await AuthorsModel.findById(req.user);
+        if(author){
+            res.status(200).send(author)
+        }else{
+            next(createHttpError(404, "Author not found!"))
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+
 
 export default authorRouter
