@@ -4,7 +4,8 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import passport from 'passport'
 import { unauthorizedHandler, forbiddenHandler, catchAllHandler } from './services/errorHandlers.js'
-import googleStrategy from './services/userAuth/oauth.js'
+import {googleStrategy, gitHubStrategy, facebookStrategy} from './services/userAuth/oauth.js'
+
 const server = express()
 const port = process.env.PORT || 3004
 
@@ -13,8 +14,10 @@ import authorRouter from './services/authors/index.js'
 import likesRouter from './services/likes/index.js'
 
 // ************************************* MIDDLEWARES *****************************
-passport.use(googleStrategy)
-
+// passport.use(googleStrategy)
+passport.use("google", googleStrategy)
+passport.use("github", gitHubStrategy)
+passport.use("facebook", facebookStrategy)
 server.use(cors())
 server.use(express.json())
 server.use(passport.initialize())
@@ -26,9 +29,9 @@ server.use("/authors", authorRouter)
 server.use("/likes", likesRouter)
 // ****************************** ERROR HANDLERS **************************
 
-// server.use(unauthorizedHandler)
-// server.use(forbiddenHandler)
-// server.use(catchAllHandler)
+server.use(unauthorizedHandler)
+server.use(forbiddenHandler)
+server.use(catchAllHandler)
 
 
 // ************************************** DB CONNECTIONS **********************************

@@ -8,7 +8,9 @@ const AuthorSchema = new Schema({
     email:{type:String},
     password:{type:String},
     role:{type:String, enum:["Admin", "User"]},
-    googleId:{type:String}
+    googleId:{type:String},
+    githubId:{type:String},
+    facebookId:{type:String}
    
 },{timestamps:true})
 
