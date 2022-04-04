@@ -92,7 +92,7 @@ Here's a blank template to get started:
 ### Built With
 
 * [NodeJS](https://nodejs.dev/)
-* [Postgresql](https://www.mongodb.com/)
+* [MongoDB](https://www.mongodb.com/)
 
 
 
