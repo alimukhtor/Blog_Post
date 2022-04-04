@@ -29,7 +29,7 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-<img src="https://github.com/alimukhtor/StriveBnb-BackEnd-Api/blob/main/strivebnb.jpg" width="1280" height="800"/>
+<!-- <img src="https://github.com/alimukhtor/StriveBnb-BackEnd-Api/blob/main/strivebnb.jpg" width="1280" height="800"/> -->
 
 <!-- PROJECT LOGO -->
 <br />
@@ -37,11 +37,11 @@
 <a href="https://github.com/github_username/repo_name">
 </a>
 
-<h3 align="center">Strive BNB API</h3>
+<h3 align="center">Blog_Post</h3>
 
 <p align="center">
 
-<a href="https://github.com/alimukhtor/Blog_Postv">View Demo</a>
+<a href="https://github.com/alimukhtor/Blog_Post">View Demo</a>
 ·
 <a href="https://github.com/alimukhtor/Blog_Post/issues">Report Bug</a>
 ·
