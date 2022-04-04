@@ -41,11 +41,11 @@
 
 <p align="center">
 
-<a href="https://github.com/alimukhtor/StriveBnb-BackEnd-Api">View Demo</a>
+<a href="https://github.com/alimukhtor/Blog_Postv">View Demo</a>
 ·
-<a href="https://github.com/alimukhtor/StriveBnb-BackEnd-Api/issues">Report Bug</a>
+<a href="https://github.com/alimukhtor/Blog_Post/issues">Report Bug</a>
 ·
-<a href="https://github.com/alimukhtor/StriveBnb-BackEnd-Api/issues">Request Feature</a>
+<a href="https://github.com/alimukhtor/Blog_Post/issues">Request Feature</a>
 </p>
 </p>
 
@@ -92,7 +92,7 @@ Here's a blank template to get started:
 ### Built With
 
 * [NodeJS](https://nodejs.dev/)
-* [Postgresql](https://www.postgresql.org/)
+* [Postgresql](https://www.mongodb.com/)
 
 
 
@@ -113,7 +113,7 @@ npm i
 
 1. Clone the repo
 ```sh
-git clone https://github.com/alimukhtor/M7-D10-Weather_App.git
+git clone https://github.com/alimukhtor/Blog_Post.git
 ```
 2. Install all required packages
 ```sh
@@ -130,7 +130,7 @@ Here are some useful tips for you to install and use this project
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/alimukhtor/StriveBnb-BackEnd-Api/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/alimukhtor/Blog_Post/issues) for a list of proposed features (and known issues).
 
 
 
@@ -159,21 +159,21 @@ Distributed under the BSD License. See `LICENSE` for more information.
 
 Izzatillo - [@twitter_handle](https://twitter.com/twitter_handle) - email
 
-Project Link: [https://github.com/javokhirbek1999/book-sharing-system](https://github.com/github_username/repo_name)
+Project Link: [https://github.com/alimukhtor/Blog_Post](https://github.com/github_username/repo_name)
 
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/alimukhtor/StriveBnb-BackEnd-Api.svg?style=for-the-badge
-[contributors-url]: https://github.com/alimukhtor/StriveBnb-BackEnd-Api/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/alimukhtor/StriveBnb-BackEnd-Api.svg?style=for-the-badge
-[forks-url]: https://github.com/alimukhtor/StriveBnb-BackEnd-Api/members
-[stars-shield]: https://img.shields.io/github/stars/alimukhtor/StriveBnb-BackEnd-Api.svg?style=for-the-badge
-[stars-url]: https://github.com/alimukhtor/StriveBnb-BackEnd-Api/stargazers
-[issues-shield]: https://img.shields.io/github/issues/alimukhtor/StriveBnb-BackEnd-Api.svg?style=for-the-badge
-[issues-url]: https://github.com/alimukhtor/StriveBnb-BackEnd-Api/issues
-[license-shield]: https://img.shields.io/github/license/alimukhtor/StriveBnb-BackEnd-Api.svg?style=for-the-badge
-[license-url]: https://github.com/alimukhtor/StriveBnb-BackEnd-Api/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/alimukhtor/Blog_Post.svg?style=for-the-badge
+[contributors-url]: https://github.com/alimukhtor/Blog_Post/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/alimukhtor/Blog_Post.svg?style=for-the-badge
+[forks-url]: https://github.com/alimukhtor/Blog_Post/members
+[stars-shield]: https://img.shields.io/github/stars/alimukhtor/Blog_Post.svg?style=for-the-badge
+[stars-url]: https://github.com/alimukhtor/Blog_Post/stargazers
+[issues-shield]: https://img.shields.io/github/issues/alimukhtor/Blog_Post.svg?style=for-the-badge
+[issues-url]: https://github.com/alimukhtor/Blog_Post/issues
+[license-shield]: https://img.shields.io/github/license/alimukhtor/Blog_Post.svg?style=for-the-badge
+[license-url]: https://github.com/alimukhtor/Blog_Post/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://github.com/alimukhtor/StriveBnb-BackEnd-Api
+[linkedin-url]: https://github.com/alimukhtor/Blog_Post
